@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Database\Factories\ContentBlockDetailsFactory;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Database\Factories\ContentBlockDetailsFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 
 #[UseFactory(ContentBlockDetailsFactory::class)]
 class ContentBlockDetails extends Model
 {
-    use SoftDeletes;
+    use HasFactory, HasTranslations, SoftDeletes;
 
     protected $fillable = [
         'content_block_id',

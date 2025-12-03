@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\NewsFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 #[UseFactory(NewsFactory::class)]
 class News extends Model
 {
-    use HasTranslations, SoftDeletes;
+    use HasFactory, HasTranslations, SoftDeletes;
 
     protected $fillable = [
         'user_id',
