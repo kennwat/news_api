@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             ->create()
             ->each(fn ($user) => $this->createNewsWithBlocks($user, rand(3, 7)));
 
-        $this->command->info('💪Created users with news and content blocks');
+        $this->command->info('Users with set of news and content blocks were created 💪');
     }
 
     protected function createNewsWithBlocks(User $user, int $newsCount): void
