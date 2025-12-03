@@ -73,9 +73,10 @@ class DatabaseSeeder extends Seeder
                     // Add 3-5 images for the slider
                     ContentBlockDetails::factory()
                         ->count(rand(3, 5))
+                        ->sliderImage() // ✅ використовує існуючий state
                         ->for($sliderBlock, 'contentBlock')
                         ->state(new Sequence(
-                            fn (Sequence $sequence) => ['position' => $sequence->index, 'text_content' => null]
+                            fn (Sequence $sequence) => ['position' => $sequence->index]
                         ))
                         ->create();
                 }
