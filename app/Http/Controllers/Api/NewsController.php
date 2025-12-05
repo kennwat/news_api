@@ -89,9 +89,12 @@ class NewsController extends Controller
         return new NewsResource($news);
     }
 
-    public function show(string $id): NewsResource
+    public function show(News $news): NewsResource
     {
-        //
+
+        $news = $this->loadRelationships($news);
+
+        return new NewsResource($news);
     }
 
     public function update(NewsUpdateRequest $request, News $news): NewsResource
@@ -131,8 +134,14 @@ class NewsController extends Controller
         return new NewsResource($this->loadRelationships($news->fresh()));
     }
 
-    public function destroy(string $id)
+    public function destroy(News $news): \Illuminate\Http\JsonResponse
     {
-        //
+
+        // Soft delete (cascading)
+        $news->delete();
+
+        return response()->json([
+            'message' => 'News deleted successfully',
+        ], 200);
     }
 }
