@@ -3,18 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\NewsStoreRequest;
+use App\Http\Requests\News\NewsUpdateRequest;
 use App\Http\Resources\News\NewsListResource;
+use App\Http\Resources\News\NewsResource;
 use App\Http\Traits\CanLoadRelationships;
+use App\Http\Traits\HasSlug;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    use CanLoadRelationships;
+    use CanLoadRelationships, HasSlug;
 
     private array $relations = ['author', 'contentBlocks', 'contentBlocks.details'];
 
-    public function index(Request $request)
+    public function index(Request $request): NewsListResource
     {
         $query = News::query()
             ->where('user_id', $request->user()->id);
@@ -44,19 +49,86 @@ class NewsController extends Controller
         return NewsListResource::collection($news);
     }
 
-    public function store(Request $request)
+    public function store(NewsStoreRequest $request): NewsResource
+    {
+        $data = $request->validated();
+
+        if (! isset($data['slug'])) {
+            $data['slug'] = self::generateUniqueSlug($data['title']['en'], News::class);
+        }
+
+        $data['user_id'] = auth()->id();
+        $data['is_visible'] = $data['is_visible'] ?? true;
+
+        $contentBlocksData = $data['content_blocks'] ?? [];
+        unset($data['content_blocks']);
+
+        // Create news with blocks and details in a transaction
+        $news = DB::transaction(function () use ($data, $contentBlocksData) {
+            $news = News::create($data);
+
+            foreach ($contentBlocksData as $blockData) {
+                $detailsData = $blockData['details'] ?? [];
+                unset($blockData['details']);
+
+                $block = $news->contentBlocks()->create([
+                    'type' => $blockData['type'],
+                    'position' => $blockData['position'],
+                ]);
+
+                foreach ($detailsData as $detail) {
+                    $block->details()->create($detail);
+                }
+            }
+
+            return $news;
+        });
+
+        $news = $this->loadRelationships($news->fresh());
+
+        return new NewsResource($news);
+    }
+
+    public function show(string $id): NewsResource
     {
         //
     }
 
-    public function show(string $id)
+    public function update(NewsUpdateRequest $request, News $news): NewsResource
     {
-        //
-    }
+        $data = $request->validated();
+        unset($data['slug']);
 
-    public function update(Request $request, string $id)
-    {
-        //
+        $contentBlocksData = $data['content_blocks'] ?? null;
+        unset($data['content_blocks']);
+
+        DB::transaction(function () use ($news, $data, $contentBlocksData) {
+            $news->update($data);
+
+            // soft delete existing blocks and details, then recreate
+            if ($contentBlocksData !== null) {
+                $news->contentBlocks()->each(function ($block) {
+                    $block->details()->delete();
+                    $block->delete();
+                });
+
+                foreach ($contentBlocksData as $blockData) {
+                    $detailsData = $blockData['details'] ?? [];
+                    unset($blockData['details']);
+
+                    $block = $news->contentBlocks()->create([
+                        'type' => $blockData['type'],
+                        'position' => $blockData['position'],
+                    ]);
+
+                    foreach ($detailsData as $detail) {
+                        $block->details()->create($detail);
+                    }
+                }
+            }
+        });
+
+        return new NewsResource($this->loadRelationships($news->fresh()));
     }
 
     public function destroy(string $id)

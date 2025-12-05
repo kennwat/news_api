@@ -59,4 +59,25 @@ class News extends Model
         return $query->whereNotNull('published_at')
             ->where('published_at', '<=', now());
     }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (News $news) {
+            if (! $news->isForceDeleting()) {
+                $news->contentBlocks()->get()->each(function ($block) {
+                    $block->details()->delete();
+                    $block->delete();
+                });
+            } else {
+                $news->contentBlocks()->forceDelete();
+            }
+        });
+
+        static::restoring(function (News $news) {
+            $news->contentBlocks()->onlyTrashed()->get()->each(function ($block) {
+                $block->details()->onlyTrashed()->restore();
+                $block->restore();
+            });
+        });
+    }
 }
