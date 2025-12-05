@@ -7,13 +7,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContentBlockResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'position' => $this->position,
+            'details' => ContentBlockDetailResource::collection($this->whenLoaded('details')),
+            'created_at' => $this->created_at->toISOString(),
+        ];
     }
 }
