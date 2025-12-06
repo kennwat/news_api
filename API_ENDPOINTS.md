@@ -8,17 +8,45 @@
 -   **Body:** `{ name, email, password, password_confirmation }`
 -   **Response:** User + Token
 
+**Example:**
+```bash
+curl -X POST http://localhost/api/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+  }'
+```
+
 ### Login
 
 -   **POST** `/api/login`
 -   **Body:** `{ email, password }`
 -   **Response:** User + Token
 
+**Example:**
+```bash
+curl -X POST http://localhost/api/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com",
+    "password": "password123"
+  }'
+```
+
 ### Logout
 
 -   **POST** `/api/logout`
 -   **Auth:** Required (Bearer Token)
 -   **Response:** Success message
+
+**Example:**
+```bash
+curl -X POST http://localhost/api/logout \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
 
 ---
 
@@ -30,12 +58,29 @@
 -   **Auth:** Required
 -   **Response:** User data
 
+**Example:**
+```bash
+curl -X GET http://localhost/api/profile \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
 ### Update Profile
 
 -   **PUT/PATCH** `/api/profile`
 -   **Auth:** Required
 -   **Body:** `{ name?, email?, password?, password_confirmation? }`
 -   **Response:** Updated user data
+
+**Example:**
+```bash
+curl -X PATCH http://localhost/api/profile \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Smith",
+    "email": "johnsmith@example.com"
+  }'
+```
 
 ---
 
@@ -54,6 +99,21 @@
 -   **Response:** Paginated list of news
 -   **Note:** Неавторизовані бачать тільки `is_visible=true`, автори бачать свої всі + інших видимі
 
+**Examples:**
+```bash
+# Simple list
+curl -X GET http://localhost/api/news
+
+# With search
+curl -X GET "http://localhost/api/news?search=laravel"
+
+# With filters
+curl -X GET "http://localhost/api/news?author=1&date=2025-12-06&per_page=5"
+
+# With relations
+curl -X GET "http://localhost/api/news?include=author,contentBlocks.details"
+```
+
 ### View News
 
 -   **GET** `/api/news/{slug}`
@@ -62,6 +122,14 @@
     -   `include` - завантаження relations
 -   **Response:** Single news item
 -   **Note:** Неавторизовані бачать тільки видимі новини, власник бачить свої всі
+
+**Example:**
+```bash
+curl -X GET http://localhost/api/news/my-news-slug
+
+# With relations
+curl -X GET "http://localhost/api/news/my-news-slug?include=author,contentBlocks.details"
+```
 
 ---
 
@@ -128,12 +196,32 @@
 -   **Body:** Same as Create (slug ignored)
 -   **Response:** Updated news
 
+**Example:**
+```bash
+curl -X PATCH http://localhost/api/news/my-news-slug \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": {
+      "en": "Updated Title",
+      "de": "Aktualisierter Titel"
+    },
+    "is_visible": false
+  }'
+```
+
 ### Delete News (Soft)
 
 -   **DELETE** `/api/news/{slug}`
 -   **Auth:** Required (Owner only)
 -   **Response:** Success message
 -   **Note:** Soft delete з каскадним видаленням блоків
+
+**Example:**
+```bash
+curl -X DELETE http://localhost/api/news/my-news-slug \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
 
 ### Toggle Visibility ⭐ NEW
 
@@ -142,6 +230,12 @@
 -   **Response:** Updated news
 -   **Note:** Перемикає `is_visible` між true/false
 
+**Example:**
+```bash
+curl -X PATCH http://localhost/api/news/my-news-slug/toggle-visibility \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
 ### Restore Deleted News ⭐ NEW
 
 -   **PATCH** `/api/news/{id}/restore`
@@ -149,12 +243,24 @@
 -   **Response:** Restored news
 -   **Note:** Відновлює софт-видалену новину з блоками
 
+**Example:**
+```bash
+curl -X PATCH http://localhost/api/news/123/restore \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
 ### Force Delete News ⭐ NEW
 
 -   **DELETE** `/api/news/{id}/force`
 -   **Auth:** Required (Owner only)
 -   **Response:** Success message
 -   **Note:** Повністю видаляє новину з БД (незворотньо)
+
+**Example:**
+```bash
+curl -X DELETE http://localhost/api/news/123/force \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
 
 ---
 
