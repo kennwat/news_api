@@ -14,11 +14,11 @@ class NewsFactory extends Factory
             'slug' => fake()->slug(3),
             'title' => $this->translations(
                 ['de', 'en'],
-                [fake('de_DE')->realText(30), fake()->realText(30)]
+                [fake('de_DE')->sentence(5), fake()->sentence(5)]
             ),
             'short_description' => $this->translations(
                 ['de', 'en'],
-                [fake('de_DE')->realText(70), fake()->realText(70)]
+                [fake('de_DE')->sentence(10), fake()->sentence(10)]
             ),
             'image_preview_path' => fake()->boolean(70)
                 ? 'news/demo/preview-'.fake()->numberBetween(1, 50).'.jpg'
