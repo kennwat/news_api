@@ -180,4 +180,39 @@ class NewsController extends Controller
             'message' => 'News deleted successfully',
         ], Response::HTTP_NO_CONTENT);
     }
+
+    public function toggleVisibility(News $news): NewsResource
+    {
+        Gate::authorize('update', $news);
+
+        $news->update([
+            'is_visible' => ! $news->is_visible,
+        ]);
+
+        return new NewsResource($this->loadRelationships($news->fresh()));
+    }
+
+    public function restore(string $id): NewsResource
+    {
+        $news = News::onlyTrashed()->findOrFail($id);
+
+        Gate::authorize('restore', $news);
+
+        $news->restore();
+
+        return new NewsResource($this->loadRelationships($news->fresh()));
+    }
+
+    public function forceDelete(string $id): JsonResponse
+    {
+        $news = News::onlyTrashed()->findOrFail($id);
+
+        Gate::authorize('forceDelete', $news);
+
+        $news->forceDelete();
+
+        return response()->json([
+            'message' => 'News permanently deleted',
+        ], Response::HTTP_NO_CONTENT);
+    }
 }

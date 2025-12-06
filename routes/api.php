@@ -26,5 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
     Route::match(['put', 'patch'], '/news/{news:slug}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{news:slug}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::delete('/news/{id}/force', [NewsController::class, 'forceDelete'])->name('news.force-delete');
+    Route::patch('/news/{id}/restore', [NewsController::class, 'restore'])->name('news.restore');
     Route::patch('/news/{news:slug}/toggle-visibility', [NewsController::class, 'toggleVisibility'])->name('news.toggle-visibility');
 });
