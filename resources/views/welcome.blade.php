@@ -254,7 +254,7 @@
     <div class="container">
         <div class="header">
             <h1>📰 News API</h1>
-            <p>RESTful API для управління новинами з підтримкою перекладів</p>
+            <p>RESTful API for News Management with Multi-language Support</p>
             <div>
                 <span class="badge">Laravel 12</span>
                 <span class="badge">PHP 8.4</span>
@@ -266,60 +266,60 @@
         <div class="content">
             <!-- Project Description -->
             <div class="section">
-                <h2><span class="emoji">🎯</span>Про проект</h2>
+                <h2><span class="emoji">🎯</span>About the Project</h2>
                 <p>
-                    <strong>News API</strong> - це сучасний RESTful API сервіс для управління новинами з багатомовною підтримкою. 
-                    Проект створений з використанням Laravel 12 і надає повний CRUD функціонал для роботи з новинами, 
-                    включаючи аутентифікацію, авторизацію та гнучку систему контент-блоків.
+                    <strong>News API</strong> is a modern RESTful API service for managing news with multi-language support. 
+                    Built with Laravel 12, it provides full CRUD functionality for news management, 
+                    including authentication, authorization, and a flexible content block system.
                 </p>
             </div>
 
             <!-- Key Features -->
             <div class="section">
-                <h2><span class="emoji">✨</span>Основний функціонал</h2>
+                <h2><span class="emoji">✨</span>Key Features</h2>
                 <div class="features">
                     <div class="feature-card">
-                        <h4>🔐 Аутентифікація</h4>
-                        <p>Реєстрація, логін, logout через Laravel Sanctum з token-based авторизацією</p>
+                        <h4>🔐 Authentication</h4>
+                        <p>Register, login, logout via Laravel Sanctum with token-based authorization</p>
                     </div>
                     <div class="feature-card">
-                        <h4>👤 Управління профілем</h4>
-                        <p>Перегляд та редагування профілю користувача (ім'я, email, пароль)</p>
+                        <h4>👤 Profile Management</h4>
+                        <p>View and edit user profile (name, email, password)</p>
                     </div>
                     <div class="feature-card">
-                        <h4>📝 CRUD новин</h4>
-                        <p>Повний цикл управління новинами: створення, перегляд, редагування, видалення</p>
+                        <h4>📝 News CRUD</h4>
+                        <p>Full news management cycle: create, view, edit, delete</p>
                     </div>
                     <div class="feature-card">
-                        <h4>🌍 Мультимовність</h4>
-                        <p>Підтримка перекладів (EN/DE) для заголовків та описів через Spatie Translatable</p>
+                        <h4>🌍 Multi-language</h4>
+                        <p>Translation support (EN/DE) for titles and descriptions via Spatie Translatable</p>
                     </div>
                     <div class="feature-card">
-                        <h4>🔍 Пошук та фільтри</h4>
-                        <p>Пошук по назві, фільтрація по автору та даті публікації</p>
+                        <h4>🔍 Search & Filters</h4>
+                        <p>Search by title, filter by author and publication date</p>
                     </div>
                     <div class="feature-card">
-                        <h4>👁️ Управління видимістю</h4>
-                        <p>Можливість приховувати/показувати новини, soft delete з відновленням</p>
+                        <h4>👁️ Visibility Control</h4>
+                        <p>Ability to hide/show news, soft delete with restore</p>
                     </div>
                     <div class="feature-card">
-                        <h4>🧱 Контент-блоки</h4>
-                        <p>Гнучка система блоків: текст, зображення, слайдери з різними типами компоновки</p>
+                        <h4>🧱 Content Blocks</h4>
+                        <p>Flexible block system: text, images, sliders with different layout types</p>
                     </div>
                     <div class="feature-card">
-                        <h4>🔗 Унікальні slug'и</h4>
-                        <p>Автоматична генерація унікальних slug'ів для SEO-friendly URLs</p>
+                        <h4>🔗 Unique Slugs</h4>
+                        <p>Automatic generation of unique slugs for SEO-friendly URLs</p>
                     </div>
                     <div class="feature-card">
-                        <h4>🛡️ Авторизація</h4>
-                        <p>Політики доступу: власник може редагувати свої новини, всі бачать публічні</p>
+                        <h4>🛡️ Authorization</h4>
+                        <p>Access policies: owners can edit their news, everyone sees public news</p>
                     </div>
                 </div>
             </div>
 
             <!-- Tech Stack -->
             <div class="section">
-                <h2><span class="emoji">🛠️</span>Технологічний стек</h2>
+                <h2><span class="emoji">🛠️</span>Tech Stack</h2>
                 <div class="tech-stack">
                     <span class="tech-badge">Laravel 12</span>
                     <span class="tech-badge">PHP 8.4</span>
@@ -334,9 +334,9 @@
 
             <!-- Main Endpoints -->
             <div class="section">
-                <h2><span class="emoji">🚀</span>Головні API Endpoints</h2>
+                <h2><span class="emoji">🚀</span>Main API Endpoints</h2>
                 
-                <h3>Аутентифікація</h3>
+                <h3>Authentication</h3>
                 <div class="endpoint">
                     <span class="method post">POST</span>
                     <span>/api/register</span>
@@ -350,7 +350,7 @@
                     <span>/api/logout</span>
                 </div>
                 
-                <h3>Профіль (auth required)</h3>
+                <h3>Profile (auth required)</h3>
                 <div class="endpoint">
                     <span class="method get">GET</span>
                     <span>/api/profile</span>
@@ -360,7 +360,7 @@
                     <span>/api/profile</span>
                 </div>
                 
-                <h3>Новини (публічні)</h3>
+                <h3>News (public)</h3>
                 <div class="endpoint">
                     <span class="method get">GET</span>
                     <span>/api/news?search=query&author=1&date=2025-12-06</span>
@@ -370,7 +370,7 @@
                     <span>/api/news/{slug}</span>
                 </div>
                 
-                <h3>Новини (auth required)</h3>
+                <h3>News (auth required)</h3>
                 <div class="endpoint">
                     <span class="method post">POST</span>
                     <span>/api/news</span>
@@ -400,72 +400,57 @@
 
             <!-- Content Block Types -->
             <div class="section">
-                <h2><span class="emoji">🧩</span>Типи контент-блоків</h2>
+                <h2><span class="emoji">🧩</span>Content Block Types</h2>
                 <ul>
-                    <li><code>text</code> - Тільки текстовий контент</li>
-                    <li><code>image</code> - Тільки зображення</li>
-                    <li><code>text_image_right</code> - Текст з зображенням праворуч</li>
-                    <li><code>text_image_left</code> - Текст з зображенням ліворуч</li>
-                    <li><code>slider</code> - Слайдер (декілька зображень з позиціонуванням)</li>
+                    <li><code>text</code> - Text content only</li>
+                    <li><code>image</code> - Image only</li>
+                    <li><code>text_image_right</code> - Text with image on the right</li>
+                    <li><code>text_image_left</code> - Text with image on the left</li>
+                    <li><code>slider</code> - Slider (multiple images with positioning)</li>
                 </ul>
             </div>
 
             <!-- Database Structure -->
             <div class="section">
-                <h2><span class="emoji">🗄️</span>Структура бази даних</h2>
+                <h2><span class="emoji">🗄️</span>Database Structure</h2>
                 <ul>
-                    <li><strong>users</strong> - Користувачі системи (автори новин)</li>
-                    <li><strong>news</strong> - Новини з перекладами, slug, видимістю, датою публікації</li>
-                    <li><strong>content_blocks</strong> - Блоки контенту з типами та позиціями</li>
-                    <li><strong>content_block_details</strong> - Деталі блоків (текст, зображення, alt-тексти)</li>
-                    <li><strong>personal_access_tokens</strong> - Sanctum токени для аутентифікації</li>
+                    <li><strong>users</strong> - System users (news authors)</li>
+                    <li><strong>news</strong> - News with translations, slug, visibility, publish date</li>
+                    <li><strong>content_blocks</strong> - Content blocks with types and positions</li>
+                    <li><strong>content_block_details</strong> - Block details (text, images, alt texts)</li>
+                    <li><strong>personal_access_tokens</strong> - Sanctum tokens for authentication</li>
                 </ul>
                 <p style="margin-top: 15px; color: #666;">
-                    <em>Всі таблиці підтримують Soft Deletes з каскадним видаленням зв'язаних записів.</em>
+                    <em>All tables support Soft Deletes with cascading deletion of related records.</em>
                 </p>
-            </div>
-
-            <!-- Testing -->
-            <div class="section">
-                <h2><span class="emoji">🧪</span>Тестування</h2>
-                <p>Проект покритий <strong>Pest тестами</strong> (49 тестів, 112 асертів):</p>
-                <ul>
-                    <li><strong>AuthTest</strong> - 8 тестів (реєстрація, логін, logout)</li>
-                    <li><strong>ProfileTest</strong> - 8 тестів (перегляд, редагування профілю)</li>
-                    <li><strong>NewsTest</strong> - 18 тестів (CRUD, пошук, фільтри, видимість)</li>
-                    <li><strong>NewsPolicyTest</strong> - 13 тестів (авторизація та політики доступу)</li>
-                </ul>
-                <div class="info-box">
-                    <strong>✅ Всі тести проходять успішно!</strong> Запустіть <code>php artisan test</code> для перевірки.
-                </div>
             </div>
 
             <!-- Features Highlight -->
             <div class="section">
-                <h2><span class="emoji">💡</span>Особливості реалізації</h2>
+                <h2><span class="emoji">💡</span>Implementation Highlights</h2>
                 <ul>
-                    <li>✅ <strong>Form Requests</strong> для валідації даних</li>
-                    <li>✅ <strong>API Resources</strong> для форматування відповідей</li>
-                    <li>✅ <strong>Policies</strong> для авторизації дій</li>
-                    <li>✅ <strong>Traits</strong> для переvisного коду (HasSlug, CanLoadRelationships)</li>
-                    <li>✅ <strong>Scopes</strong> в моделях (visible, published)</li>
-                    <li>✅ <strong>Factories & Seeders</strong> для тестових даних</li>
-                    <li>✅ <strong>Soft Deletes</strong> з каскадним видаленням</li>
-                    <li>✅ <strong>Dynamic Relations Loading</strong> через <code>?include=author,contentBlocks</code></li>
-                    <li>✅ <strong>Оптимізовані індекси БД</strong> для швидкого пошуку</li>
-                    <li>✅ <strong>Laravel Pint</strong> для форматування коду</li>
+                    <li>✅ <strong>Form Requests</strong> for data validation</li>
+                    <li>✅ <strong>API Resources</strong> for response formatting</li>
+                    <li>✅ <strong>Policies</strong> for action authorization</li>
+                    <li>✅ <strong>Traits</strong> for reusable code (HasSlug, CanLoadRelationships)</li>
+                    <li>✅ <strong>Scopes</strong> in models (visible, published)</li>
+                    <li>✅ <strong>Factories & Seeders</strong> for test data</li>
+                    <li>✅ <strong>Soft Deletes</strong> with cascading deletion</li>
+                    <li>✅ <strong>Dynamic Relations Loading</strong> via <code>?include=author,contentBlocks</code></li>
+                    <li>✅ <strong>Optimized DB Indexes</strong> for fast search</li>
+                    <li>✅ <strong>Laravel Pint</strong> for code formatting</li>
                 </ul>
             </div>
 
             <!-- Quick Start -->
             <div class="section">
-                <h2><span class="emoji">🚀</span>Швидкий старт</h2>
+                <h2><span class="emoji">🚀</span>Quick Start</h2>
                 <div class="info-box">
-                    <p>Детальні інструкції по встановленню та налаштуванню знаходяться в <strong>README.md</strong> файлі в корені проекту.</p>
+                    <p>Detailed installation and setup instructions can be found in the <strong>README.md</strong> file in the project root.</p>
                 </div>
                 <div class="cta-buttons">
-                    <a href="/api/news" class="btn btn-primary">Переглянути новини</a>
-                    <a href="#" class="btn btn-secondary" onclick="alert('Документацію можна знайти в файлі API_ENDPOINTS.md в корені проекту'); return false;">API Документація</a>
+                    <a href="/api/news" class="btn btn-primary">View News</a>
+                    <a href="#" class="btn btn-secondary" onclick="alert('Documentation can be found in the API_ENDPOINTS.md file in the project root'); return false;">API Documentation</a>
                 </div>
             </div>
         </div>
@@ -473,7 +458,7 @@
         <div class="footer">
             <p>Built with ❤️ using Laravel 12 | © {{ date('Y') }}</p>
             <p style="margin-top: 10px; font-size: 0.9em;">
-                API версія: <strong>1.0.0</strong> | 
+                API version: <strong>1.0.0</strong> | 
                 Laravel: <strong>{{ app()->version() }}</strong> | 
                 PHP: <strong>{{ PHP_VERSION }}</strong>
             </p>
