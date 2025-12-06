@@ -10,8 +10,12 @@ use App\Http\Resources\News\NewsResource;
 use App\Http\Traits\CanLoadRelationships;
 use App\Http\Traits\HasSlug;
 use App\Models\News;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class NewsController extends Controller
 {
@@ -19,10 +23,38 @@ class NewsController extends Controller
 
     private array $relations = ['author', 'contentBlocks', 'contentBlocks.details'];
 
-    public function index(Request $request): NewsListResource
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $query = News::query()
-            ->where('user_id', $request->user()->id);
+        // $user = $request->user();
+        $user = auth('sanctum')->user();
+        $query = News::query();
+
+        // Filtration based on user authentication
+        if ($user) {
+            // AUTHORIZED: own news (all) + others' visible news
+            if ($request->filled('author')) {
+                $authorId = (int) $request->input('author');
+
+                if ($authorId === $user->id) {
+                    $query->where('user_id', $user->id);
+                } else {
+                    $query->where('user_id', $authorId)
+                        ->where('is_visible', true);
+                }
+            } else {
+                $query->where(function ($q) use ($user) {
+                    $q->where('user_id', $user->id)
+                        ->orWhere('is_visible', true);
+                });
+            }
+        } else {
+            // UNAUTHORIZED: only visible and published news
+            $query->visible()->published();
+
+            if ($request->filled('author')) {
+                $query->where('user_id', $request->input('author'));
+            }
+        }
 
         // Dynamic loading of relationships via ?include=author,contentBlocks.details
         $query = $this->loadRelationships($query);
@@ -37,8 +69,8 @@ class NewsController extends Controller
                         ->orWhereLike('short_description->en', "%{$search}%");
                 });
             })
-            ->when($request->filled('is_visible'), function ($q) use ($request) {
-                $q->where('is_visible', $request->boolean('is_visible'));
+            ->when($request->input('date'), function ($q) use ($request) {
+                $q->whereDate('published_at', $request->date);
             })
             ->orderBy('created_at', 'desc');
 
@@ -91,6 +123,7 @@ class NewsController extends Controller
 
     public function show(News $news): NewsResource
     {
+        Gate::authorize('view', $news);
 
         $news = $this->loadRelationships($news);
 
@@ -99,6 +132,8 @@ class NewsController extends Controller
 
     public function update(NewsUpdateRequest $request, News $news): NewsResource
     {
+        Gate::authorize('update', $news);
+
         $data = $request->validated();
         unset($data['slug']);
 
@@ -134,14 +169,15 @@ class NewsController extends Controller
         return new NewsResource($this->loadRelationships($news->fresh()));
     }
 
-    public function destroy(News $news): \Illuminate\Http\JsonResponse
+    public function destroy(News $news): JsonResponse
     {
+        Gate::authorize('delete', $news);
 
         // Soft delete (cascading)
         $news->delete();
 
         return response()->json([
             'message' => 'News deleted successfully',
-        ], 200);
+        ], Response::HTTP_NO_CONTENT);
     }
 }

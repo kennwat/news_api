@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -31,7 +32,7 @@ class AuthController extends Controller
                 'created_at' => $user->created_at->toISOString(),
             ],
             'token' => $token,
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -47,7 +48,7 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'message' => 'Wrong credentials provided...',
-            ], 401);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $user->createToken('auth-token')->plainTextToken;
@@ -68,6 +69,6 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Successfully logged out',
-        ]);
+        ], Response::HTTP_OK);
     }
 }

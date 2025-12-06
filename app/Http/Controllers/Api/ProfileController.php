@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Profile\ProfileUpdateRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Profile\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -20,7 +21,7 @@ class ProfileController extends Controller
             'email' => $user->email,
             'created_at' => $user->created_at->toISOString(),
             'news_count' => $user->news()->count(),
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function update(ProfileUpdateRequest $request): JsonResponse
@@ -41,6 +42,6 @@ class ProfileController extends Controller
             'email' => $user->email,
             'created_at' => $user->created_at->toISOString(),
             'updated_at' => $user->updated_at->toISOString(),
-        ]);
+        ], Response::HTTP_OK);
     }
 }

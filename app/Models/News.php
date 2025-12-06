@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Policies\NewsPolicy;
 use Database\Factories\NewsFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
 #[UseFactory(NewsFactory::class)]
+#[UsePolicy(NewsPolicy::class)]
 class News extends Model
 {
     use HasFactory, HasTranslations, SoftDeletes;

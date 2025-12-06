@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 // Auth
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -15,10 +15,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::match(['put', 'patch'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
-    Route::apiResource('news', NewsController::class)->parameters(['news' => 'news:slug']);
-    
-    // toggle visibility of news
-    Route::patch('news/{news:slug}/toggle-visibility', [NewsController::class, 'toggleVisibility'])
-        ->name('news.toggle-visibility');
+// News (public routes)
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
+
+// News (protected routes)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    Route::match(['put', 'patch'], '/news/{news:slug}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/news/{news:slug}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::patch('/news/{news:slug}/toggle-visibility', [NewsController::class, 'toggleVisibility'])->name('news.toggle-visibility');
 });
