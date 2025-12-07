@@ -361,3 +361,48 @@ it('cannot create news without authentication', function () {
 
     $response->assertUnauthorized();
 });
+
+it('can load relationships dynamically with include parameter', function () {
+    $user = User::factory()->create();
+    $news = News::factory()->create([
+        'user_id' => $user->id,
+        'is_visible' => true,
+        'published_at' => now()->subDay(),
+    ]);
+
+    $response = $this->getJson('/api/news?include=author');
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'slug',
+                    'author' => [
+                        'id',
+                        'name',
+                    ],
+                ],
+            ],
+        ]);
+
+    $firstNews = $response->json('data.0');
+    expect($firstNews)->toHaveKey('author');
+    expect($firstNews['author'])->toHaveKeys(['id', 'name']);
+});
+
+it('does not load relationships without include parameter', function () {
+    $user = User::factory()->create();
+    News::factory()->create([
+        'user_id' => $user->id,
+        'is_visible' => true,
+        'published_at' => now()->subDay(),
+    ]);
+
+    $response = $this->getJson('/api/news');
+
+    $response->assertOk();
+
+    $firstNews = $response->json('data.0');
+    expect($firstNews)->not->toHaveKey('author');
+});
