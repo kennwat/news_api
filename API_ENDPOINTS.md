@@ -1,5 +1,26 @@
 # News API Endpoints
 
+## ⚙️ Admin Panel
+
+The project includes **Filament v4 Admin Panel** for managing news, users, and content through a beautiful web interface.
+
+- **URL**: `http://localhost/admin`
+- **Features**: News CRUD, User management, Content blocks builder, Media library
+- **Multi-language**: Full support for EN/DE translations
+
+### Creating Admin User
+
+```bash
+# Using Filament command
+docker compose exec app php artisan make:filament-user
+
+# Or using tinker
+docker compose exec app php artisan tinker
+> User::create(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => bcrypt('password')]);
+```
+
+---
+
 ## 🔐 Authentication
 
 ### Register
@@ -291,6 +312,15 @@ curl -X DELETE http://localhost/api/news/123/force \
 ---
 
 ## 💡 Tips
+
+### Admin Panel
+
+For easier content management, use the Filament Admin Panel at `/admin`. It provides:
+- Visual content block builder
+- Rich text editor for news
+- Image upload and management
+- Multi-language translation interface
+- User-friendly forms with validation
 
 ### Dynamic Relations Loading
 

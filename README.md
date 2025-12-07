@@ -5,6 +5,7 @@ RESTful API service for news management with multi-language support and flexible
 ![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Filament](https://img.shields.io/badge/Filament-4.0-FFAA00?style=for-the-badge)
 ![Pest](https://img.shields.io/badge/Pest-4.0-42D392?style=for-the-badge)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
@@ -33,6 +34,7 @@ RESTful API service for news management with multi-language support and flexible
 - 👁️ News visibility control
 - ♻️ Soft delete with restore capability
 - 🛡️ Authorization policies
+- ⚙️ Filament v4 Admin Panel for content management
 
 ## ✨ Features
 
@@ -61,11 +63,21 @@ RESTful API service for news management with multi-language support and flexible
 - Other users see only visible and published news
 - Only owners can edit/delete their news
 
+### Admin Panel (Filament v4)
+- **Dashboard**: Overview of news statistics and recent activity
+- **News Management**: Create, edit, delete news with rich text editor
+- **User Management**: Manage system users and authors
+- **Content Blocks**: Visual builder for news content
+- **Multi-language**: Manage translations for EN/DE
+- **Media Library**: Upload and manage images
+- **Access Control**: Role-based access (coming soon)
+
 ## 🛠️ Tech Stack
 
 - **Backend**: Laravel 12 (PHP 8.4)
 - **Database**: MySQL 8.0
 - **Authentication**: Laravel Sanctum
+- **Admin Panel**: Filament v4
 - **Translations**: Spatie Laravel Translatable
 - **Testing**: Pest
 - **Code Style**: Laravel Pint
@@ -131,6 +143,21 @@ docker compose logs -f app
 ```
 
 The application will be available at: **http://localhost**
+
+### Admin Panel Access
+
+The Filament admin panel is available at: **http://localhost/admin**
+
+To create an admin user:
+```bash
+docker compose exec app php artisan make:filament-user
+```
+
+Or use tinker to create a user manually:
+```bash
+docker compose exec app php artisan tinker
+> User::create(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => bcrypt('password')]);
+```
 
 ## 📚 API Documentation
 
@@ -237,6 +264,8 @@ news_api/
 ├── app/
 │   ├── Enums/
 │   │   └── BlockTypeEnum.php          # Content block types
+│   ├── Filament/
+│   │   └── Resources/                 # Filament admin resources
 │   ├── Http/
 │   │   ├── Controllers/Api/
 │   │   │   ├── AuthController.php     # Authentication

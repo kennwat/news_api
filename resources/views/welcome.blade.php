@@ -260,6 +260,7 @@
                 <span class="badge">PHP 8.4</span>
                 <span class="badge">MySQL</span>
                 <span class="badge">Sanctum Auth</span>
+                <span class="badge">Filament Admin</span>
             </div>
         </div>
         
@@ -314,6 +315,10 @@
                         <h4>🛡️ Authorization</h4>
                         <p>Access policies: owners can edit their news, everyone sees public news</p>
                     </div>
+                    <div class="feature-card">
+                        <h4>⚙️ Admin Panel</h4>
+                        <p>Filament v4 admin interface for managing news, users, and content</p>
+                    </div>
                 </div>
             </div>
 
@@ -325,6 +330,7 @@
                     <span class="tech-badge">PHP 8.4</span>
                     <span class="tech-badge">MySQL</span>
                     <span class="tech-badge">Laravel Sanctum</span>
+                    <span class="tech-badge">Filament v4</span>
                     <span class="tech-badge">Spatie Translatable</span>
                     <span class="tech-badge">Pest (Testing)</span>
                     <span class="tech-badge">Laravel Pint</span>
@@ -450,6 +456,7 @@
                 </div>
                 <div class="cta-buttons">
                     <a href="/api/news" class="btn btn-primary">View News</a>
+                    <a href="/admin" class="btn btn-primary">Admin Panel</a>
                     <a href="#" class="btn btn-secondary" onclick="alert('Documentation can be found in the API_ENDPOINTS.md file in the project root'); return false;">API Documentation</a>
                 </div>
             </div>
