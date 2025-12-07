@@ -25,7 +25,6 @@ class NewsController extends Controller
 
     public function index(Request $request): AnonymousResourceCollection
     {
-        // $user = $request->user();
         $user = auth('sanctum')->user();
         $query = News::query();
 
@@ -89,7 +88,7 @@ class NewsController extends Controller
             $data['slug'] = self::generateUniqueSlug($data['title']['en'], News::class);
         }
 
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = $request->user()->id;
         $data['is_visible'] = $data['is_visible'] ?? true;
 
         $contentBlocksData = $data['content_blocks'] ?? [];
@@ -143,9 +142,9 @@ class NewsController extends Controller
         DB::transaction(function () use ($news, $data, $contentBlocksData) {
             $news->update($data);
 
-            // soft delete existing blocks and details, then recreate
+            // Soft delete existing blocks and details, then recreate
             if ($contentBlocksData !== null) {
-                $news->contentBlocks()->each(function ($block) {
+                $news->contentBlocks->each(function ($block) {
                     $block->details()->delete();
                     $block->delete();
                 });
@@ -173,7 +172,6 @@ class NewsController extends Controller
     {
         Gate::authorize('delete', $news);
 
-        // Soft delete (cascading)
         $news->delete();
 
         return response()->json([

@@ -42,12 +42,12 @@ class AuthController extends Controller
         if (! $user) {
             throw ValidationException::withMessages([
                 'email' => ['Wrong credentials provided...'],
-            ]);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'message' => 'Wrong credentials provided...',
+                'message' => ['Wrong credentials provided...'],
             ], Response::HTTP_UNAUTHORIZED);
         }
 
