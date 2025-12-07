@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-// Public Access Tests
 it('can list visible news without authentication', function () {
     $user = User::factory()->create();
 
@@ -103,7 +102,6 @@ it('can filter news by author', function () {
         ->assertJsonCount(2, 'data');
 });
 
-// Authenticated User Tests
 it('can create news', function () {
     $user = User::factory()->create();
 

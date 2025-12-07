@@ -14,11 +14,9 @@ it('allows anyone to view visible news', function () {
         'published_at' => now()->subDay(),
     ]);
 
-    // Unauthenticated can view
     $response = $this->getJson("/api/news/{$news->slug}");
     $response->assertOk();
 
-    // Other user can view
     $otherUser = User::factory()->create();
     $response = $this->actingAs($otherUser, 'sanctum')
         ->getJson("/api/news/{$news->slug}");
@@ -32,11 +30,9 @@ it('prevents non-owners from viewing hidden news', function () {
         'is_visible' => false,
     ]);
 
-    // Unauthenticated cannot view
     $response = $this->getJson("/api/news/{$news->slug}");
     $response->assertForbidden();
 
-    // Other user cannot view
     $otherUser = User::factory()->create();
     $response = $this->actingAs($otherUser, 'sanctum')
         ->getJson("/api/news/{$news->slug}");

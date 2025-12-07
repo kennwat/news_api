@@ -85,7 +85,6 @@ it('can update profile password', function () {
 
     $response->assertOk();
 
-    // Verify new password works
     $this->assertTrue(
         \Hash::check('new-password123', $user->fresh()->password)
     );

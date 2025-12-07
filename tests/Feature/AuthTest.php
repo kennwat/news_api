@@ -103,7 +103,6 @@ it('can logout successfully', function () {
     $response->assertOk()
         ->assertJson(['message' => 'Successfully logged out']);
 
-    // Verify token is deleted
     $this->assertDatabaseMissing('personal_access_tokens', [
         'tokenable_id' => $user->id,
         'tokenable_type' => User::class,

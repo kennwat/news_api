@@ -7,7 +7,7 @@ use App\Models\User;
 
 class NewsPolicy
 {
-    public function viewAny(?User $user, News $news): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
