@@ -228,6 +228,10 @@ curl -X POST http://localhost/api/news \
 
 The project is covered with **Pest** tests.
 
+**Test Coverage:**
+- Feature tests: Auth, News, Profile, News Policy, User Policy
+- Unit tests included
+
 ### Running Tests:
 
 ```bash
@@ -271,7 +275,8 @@ news_api/
 │   │   ├── News.php
 │   │   └── User.php
 │   └── Policies/
-│       └── NewsPolicy.php             # Authorization policies
+│       ├── NewsPolicy.php             # News authorization
+│       └── UserPolicy.php             # User authorization
 ├── database/
 │   ├── factories/                     # Model factories
 │   ├── migrations/                    # Database migrations
@@ -279,11 +284,13 @@ news_api/
 ├── routes/
 │   └── api.php                        # API routes
 ├── tests/
-│   └── Feature/
-│       ├── AuthTest.php
-│       ├── NewsTest.php
-│       ├── NewsPolicyTest.php
-│       └── ProfileTest.php
+│   ├── Feature/
+│   │   ├── AuthTest.php
+│   │   ├── NewsTest.php
+│   │   ├── NewsPolicyTest.php
+│   │   ├── UserPolicyTest.php
+│   │   └── ProfileTest.php
+│   └── Unit/
 ├── API_ENDPOINTS.md                   # API documentation
 ├── compose.yaml                       # Docker Compose config
 └── README.md                          # This file

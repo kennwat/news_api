@@ -395,7 +395,6 @@
                 </div>
                 <div class="endpoint">
                     <span class="method patch">PATCH</span>
-                    <span class="method delete">DELETE</span>
                     <span>/api/news/{id}/restore</span>
                 </div>
                 <div class="endpoint">
@@ -437,7 +436,7 @@
                 <ul>
                     <li>✅ <strong>Form Requests</strong> for data validation</li>
                     <li>✅ <strong>API Resources</strong> for response formatting</li>
-                    <li>✅ <strong>Policies</strong> for action authorization</li>
+                    <li>✅ <strong>Policies</strong> for authorization (News, User)</li>
                     <li>✅ <strong>Traits</strong> for reusable code (HasSlug, CanLoadRelationships)</li>
                     <li>✅ <strong>Scopes</strong> in models (visible, published)</li>
                     <li>✅ <strong>Factories & Seeders</strong> for test data</li>
@@ -463,7 +462,7 @@
         </div>
         
         <div class="footer">
-            <p>Built with ❤️ using Laravel 12 | © {{ date('Y') }}</p>
+            <p>Built with ❤️ using Laravel 12 | © {{ date('Y') }} Bohdan Lebedovskyi</p>
             <p style="margin-top: 10px; font-size: 0.9em;">
                 API version: <strong>1.0.0</strong> | 
                 Laravel: <strong>{{ app()->version() }}</strong> | 
