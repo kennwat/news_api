@@ -324,11 +324,17 @@ docker compose exec app php artisan route:list
 
 ## 👥 Author
 
-- **Bohdan Lebedovskyi** - Initial work
+**Bohdan Lebedovskyi**
+- Email: b.lebedovskyi@gmail.com
+- GitHub: [@kennwat](https://github.com/kennwat)
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project was created as a technical test assignment.
+
+Copyright © 2025 Bohdan Lebedovskyi. All rights reserved.
+
+The code is provided for evaluation purposes. Commercial use or redistribution without permission is not permitted.
 
 ---
 
