@@ -153,12 +153,6 @@ To create an admin user:
 docker compose exec app php artisan make:filament-user
 ```
 
-Or use tinker to create a user manually:
-```bash
-docker compose exec app php artisan tinker
-> User::create(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => bcrypt('password')]);
-```
-
 ## 📚 API Documentation
 
 Detailed documentation for all endpoints is available in [`API_ENDPOINTS.md`](./API_ENDPOINTS.md).
@@ -242,9 +236,6 @@ docker compose exec app php artisan test
 
 # Run specific test
 docker compose exec app php artisan test --filter=AuthTest
-
-# Run with coverage
-docker compose exec app php artisan test --coverage
 ```
 
 ### Code Formatting:
@@ -315,15 +306,6 @@ news_api/
 3. `text_image_right` - Text with image on the right
 4. `text_image_left` - Text with image on the left
 5. `slider` - Slider with multiple images
-
-## 🔒 Security
-
-- Password hashing via bcrypt
-- API protection via Laravel Sanctum
-- CSRF protection
-- SQL injection prevention via Eloquent ORM
-- XSS protection via Blade escaping
-- API rate limiting
 
 ## 📝 Useful Commands
 
