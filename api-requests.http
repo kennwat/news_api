@@ -1,0 +1,207 @@
+### Variables
+@baseUrl = http://localhost/api
+@token = 
+
+### ============================================
+### Authentication
+### ============================================
+
+### Register User
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+
+### Login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+> {%
+  client.global.set("token", response.body.token);
+%}
+
+### Logout
+POST {{baseUrl}}/logout
+Authorization: Bearer {{token}}
+
+### ============================================
+### Profile
+### ============================================
+
+### Get Profile
+GET {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+
+### Update Profile Name
+PATCH {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Name"
+}
+
+### Update Profile Email
+PATCH {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com"
+}
+
+### Update Profile Password
+PATCH {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "current_password": "password123",
+  "password": "newpassword123",
+  "password_confirmation": "newpassword123"
+}
+
+### ============================================
+### News - Public
+### ============================================
+
+### Get All News (Public)
+GET {{baseUrl}}/news
+
+### Get News with Pagination
+GET {{baseUrl}}/news?per_page=5&page=1
+
+### Get News with Relationships
+GET {{baseUrl}}/news?include=author,contentBlocks.details
+
+### Search News by Title
+GET {{baseUrl}}/news?search=breaking
+
+### Filter News by Author
+GET {{baseUrl}}/news?user_id=1
+
+### Filter News by Date Range
+GET {{baseUrl}}/news?published_from=2025-01-01&published_to=2025-12-31
+
+### Get Single News by Slug
+GET {{baseUrl}}/news/breaking-news
+
+### ============================================
+### News - Authenticated
+### ============================================
+
+### Create News (Simple)
+POST {{baseUrl}}/news
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": {
+    "en": "Breaking News",
+    "de": "Aktuelle Nachrichten"
+  },
+  "short_description": {
+    "en": "This is a short description",
+    "de": "Dies ist eine kurze Beschreibung"
+  },
+  "image_preview_path": "/images/preview.jpg",
+  "published_at": "2025-12-08 10:00:00",
+  "is_visible": true
+}
+
+### Create News with Content Blocks
+POST {{baseUrl}}/news
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": {
+    "en": "Complete News Article",
+    "de": "Vollständiger Nachrichtenartikel"
+  },
+  "short_description": {
+    "en": "Full featured news with content blocks",
+    "de": "Vollständige Nachrichten mit Inhaltsblöcken"
+  },
+  "image_preview_path": "/images/article.jpg",
+  "published_at": "2025-12-08 12:00:00",
+  "is_visible": true,
+  "content_blocks": [
+    {
+      "type": "text",
+      "position": 1,
+      "details": [
+        {
+          "text_content": {
+            "en": "First paragraph of the article...",
+            "de": "Erster Absatz des Artikels..."
+          },
+          "position": 1
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "position": 2,
+      "details": [
+        {
+          "image_path": "/images/content1.jpg",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "type": "text_image_right",
+      "position": 3,
+      "details": [
+        {
+          "text_content": {
+            "en": "Text with image on the right",
+            "de": "Text mit Bild rechts"
+          },
+          "image_path": "/images/content2.jpg",
+          "position": 1
+        }
+      ]
+    }
+  ]
+}
+
+### Update News
+PATCH {{baseUrl}}/news/breaking-news
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": {
+    "en": "Updated Breaking News",
+    "de": "Aktualisierte Nachrichten"
+  },
+  "is_visible": false
+}
+
+### Toggle News Visibility
+PATCH {{baseUrl}}/news/breaking-news/toggle-visibility
+Authorization: Bearer {{token}}
+
+### Delete News (Soft Delete)
+DELETE {{baseUrl}}/news/breaking-news
+Authorization: Bearer {{token}}
+
+### Restore Deleted News
+PATCH {{baseUrl}}/news/1/restore
+Authorization: Bearer {{token}}
+
+### Force Delete News (Permanent)
+DELETE {{baseUrl}}/news/1/force
+Authorization: Bearer {{token}}

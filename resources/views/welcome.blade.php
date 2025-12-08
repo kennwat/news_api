@@ -452,6 +452,7 @@
                 <h2><span class="emoji">🚀</span>Quick Start</h2>
                 <div class="info-box">
                     <p>Detailed installation and setup instructions can be found in the <strong>README.md</strong> file in the project root.</p>
+                    <p style="margin-top: 10px;">💡 <strong>Tip:</strong> Use the <code>api-requests.http</code> file to test all endpoints directly from PhpStorm/JetBrains IDE without Postman!</p>
                 </div>
                 <div class="cta-buttons">
                     <a href="/api/news" class="btn btn-primary">View News</a>

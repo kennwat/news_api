@@ -1,5 +1,11 @@
 # News API Endpoints
 
+## 🧪 Testing with PhpStorm/JetBrains IDE
+
+For easier API testing, use the [`api-requests.http`](./api-requests.http) file. It contains all endpoints with examples and automatically saves authentication tokens. Simply open it in PhpStorm and click the green ▶️ button next to any request.
+
+---
+
 ## ⚙️ Admin Panel
 
 The project includes **Filament v4 Admin Panel** for managing news, users, and content through a beautiful web interface.

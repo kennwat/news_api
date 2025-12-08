@@ -157,6 +157,8 @@ docker compose exec app php artisan make:filament-user
 
 Detailed documentation for all endpoints is available in [`API_ENDPOINTS.md`](./API_ENDPOINTS.md).
 
+**Testing with PhpStorm/JetBrains IDE:** Use the [`api-requests.http`](./api-requests.http) file to test all endpoints directly from your IDE without Postman.
+
 ### Main Endpoints:
 
 #### Authentication
