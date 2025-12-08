@@ -112,13 +112,13 @@ curl -X PATCH http://localhost/api/profile \
 -   **GET** `/api/news`
 -   **Auth:** Optional
 -   **Query Params:**
-    -   `search` - пошук по title/short_description
-    -   `author` - ID автора
-    -   `date` - дата публікації (YYYY-MM-DD)
-    -   `per_page` - кількість на сторінці (default: 10)
-    -   `include` - завантаження relations (author,contentBlocks,contentBlocks.details)
+    -   `search` - search by title/short_description
+    -   `author` - author ID
+    -   `date` - publication date (YYYY-MM-DD)
+    -   `per_page` - items per page (default: 10)
+    -   `include` - load relations (author,contentBlocks,contentBlocks.details)
 -   **Response:** Paginated list of news
--   **Note:** Неавторизовані бачать тільки `is_visible=true`, автори бачать свої всі + інших видимі
+-   **Note:** Unauthenticated users see only `is_visible=true`, authors see all their own + others' visible news
 
 **Examples:**
 ```bash
@@ -140,9 +140,9 @@ curl -X GET "http://localhost/api/news?include=author,contentBlocks.details"
 -   **GET** `/api/news/{slug}`
 -   **Auth:** Optional
 -   **Query Params:**
-    -   `include` - завантаження relations
+    -   `include` - load relations
 -   **Response:** Single news item
--   **Note:** Неавторизовані бачать тільки видимі новини, власник бачить свої всі
+-   **Note:** Unauthenticated users see only visible news, owner sees all their own
 
 **Example:**
 ```bash
@@ -236,7 +236,7 @@ curl -X PATCH http://localhost/api/news/my-news-slug \
 -   **DELETE** `/api/news/{slug}`
 -   **Auth:** Required (Owner only)
 -   **Response:** Success message
--   **Note:** Soft delete з каскадним видаленням блоків
+-   **Note:** Soft delete with cascading deletion of blocks
 
 **Example:**
 ```bash
@@ -249,7 +249,7 @@ curl -X DELETE http://localhost/api/news/my-news-slug \
 -   **PATCH** `/api/news/{slug}/toggle-visibility`
 -   **Auth:** Required (Owner only)
 -   **Response:** Updated news
--   **Note:** Перемикає `is_visible` між true/false
+-   **Note:** Toggles `is_visible` between true/false
 
 **Example:**
 ```bash
@@ -262,7 +262,7 @@ curl -X PATCH http://localhost/api/news/my-news-slug/toggle-visibility \
 -   **PATCH** `/api/news/{id}/restore`
 -   **Auth:** Required (Owner only)
 -   **Response:** Restored news
--   **Note:** Відновлює софт-видалену новину з блоками
+-   **Note:** Restores soft-deleted news with blocks
 
 **Example:**
 ```bash
@@ -275,7 +275,7 @@ curl -X PATCH http://localhost/api/news/123/restore \
 -   **DELETE** `/api/news/{id}/force`
 -   **Auth:** Required (Owner only)
 -   **Response:** Success message
--   **Note:** Повністю видаляє новину з БД (незворотньо)
+-   **Note:** Permanently deletes news from database (irreversible)
 
 **Example:**
 ```bash
@@ -289,11 +289,11 @@ curl -X DELETE http://localhost/api/news/123/force \
 
 ### Available Types (BlockTypeEnum)
 
--   `text` - Тільки текст
--   `image` - Тільки зображення
--   `text_image_right` - Текст + зображення праворуч
--   `text_image_left` - Текст + зображення ліворуч
--   `slider` - Слайдер (декілька зображень з позицією)
+-   `text` - Text only
+-   `image` - Image only
+-   `text_image_right` - Text with image on the right
+-   `text_image_left` - Text with image on the left
+-   `slider` - Slider (multiple images with positioning)
 
 ---
 
@@ -301,23 +301,23 @@ curl -X DELETE http://localhost/api/news/123/force \
 
 ### News Policy
 
--   **viewAny:** Всі (public + auth)
--   **view:** Власник бачить всі свої, інші бачать тільки видимі
--   **create:** Будь-який авторизований
--   **update:** Тільки власник
--   **delete:** Тільки власник
--   **restore:** Тільки власник
--   **forceDelete:** Тільки власник
+-   **viewAny:** Everyone (public + auth)
+-   **view:** Owner sees all their own, others see only visible
+-   **create:** Any authenticated user
+-   **update:** Owner only
+-   **delete:** Owner only
+-   **restore:** Owner only
+-   **forceDelete:** Owner only
 
 ### User Policy
 
--   **viewAny:** Всі авторизовані користувачі
--   **view:** Користувач може переглядати тільки свій профіль
--   **update:** Користувач може редагувати тільки свій профіль
--   **create:** Заборонено (реєстрація через API)
--   **delete:** Заборонено
--   **restore:** Заборонено
--   **forceDelete:** Заборонено
+-   **viewAny:** All authenticated users
+-   **view:** User can view only their own profile
+-   **update:** User can update only their own profile
+-   **create:** Forbidden (registration via API)
+-   **delete:** Forbidden
+-   **restore:** Forbidden
+-   **forceDelete:** Forbidden
 
 ---
 
@@ -334,19 +334,19 @@ For easier content management, use the Filament Admin Panel at `/admin`. It prov
 
 ### Dynamic Relations Loading
 
-Додайте `?include=author,contentBlocks,contentBlocks.details` до будь-якого news endpoint для завантаження зв'язків.
+Add `?include=author,contentBlocks,contentBlocks.details` to any news endpoint to load relations.
 
 ### Search
 
-`/api/news?search=keyword` - шукає в title та short_description обох мов
+`/api/news?search=keyword` - searches in title and short_description of both languages
 
 ### Filter by Author
 
-`/api/news?author=1` - фільтрує новини по автору
+`/api/news?author=1` - filters news by author
 
 ### Filter by Date
 
-`/api/news?date=2025-12-06` - фільтрує новини по даті публікації
+`/api/news?date=2025-12-06` - filters news by publication date
 
 ### Combine Filters
 
