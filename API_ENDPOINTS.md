@@ -244,7 +244,7 @@ curl -X DELETE http://localhost/api/news/my-news-slug \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
-### Toggle Visibility ⭐ NEW
+### Toggle Visibility ⭐ Additional
 
 -   **PATCH** `/api/news/{slug}/toggle-visibility`
 -   **Auth:** Required (Owner only)
@@ -257,7 +257,7 @@ curl -X PATCH http://localhost/api/news/my-news-slug/toggle-visibility \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
-### Restore Deleted News ⭐ NEW
+### Restore Deleted News ⭐ Additional
 
 -   **PATCH** `/api/news/{id}/restore`
 -   **Auth:** Required (Owner only)
@@ -270,7 +270,7 @@ curl -X PATCH http://localhost/api/news/123/restore \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
-### Force Delete News ⭐ NEW
+### Force Delete News ⭐ Additional
 
 -   **DELETE** `/api/news/{id}/force`
 -   **Auth:** Required (Owner only)
