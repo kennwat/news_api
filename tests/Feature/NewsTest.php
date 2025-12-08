@@ -2,9 +2,6 @@
 
 use App\Models\News;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('can list visible news without authentication', function () {
     $user = User::factory()->create();

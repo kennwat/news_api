@@ -2,9 +2,6 @@
 
 use App\Models\News;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('allows anyone to view visible news', function () {
     $author = User::factory()->create();
