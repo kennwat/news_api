@@ -183,7 +183,6 @@ it('can create news with content blocks', function () {
 it('owner can see their hidden news in list', function () {
     $user = User::factory()->create();
 
-    // Створюємо 2 видимі та 2 приховані новини власника
     News::factory()->count(2)->create([
         'user_id' => $user->id,
         'is_visible' => true,
@@ -196,12 +195,11 @@ it('owner can see their hidden news in list', function () {
         'published_at' => now()->subDay(),
     ]);
 
-    // Авторизований власник повинен бачити ВСІ свої новини (видимі + приховані)
     $response = $this->actingAs($user, 'sanctum')
         ->getJson('/api/news');
 
     $response->assertOk()
-        ->assertJsonCount(4, 'data'); // Має повернути всі 4 новини
+        ->assertJsonCount(4, 'data');
 });
 
 it('owner can see their hidden news in single view', function () {
