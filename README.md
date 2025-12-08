@@ -337,11 +337,9 @@ docker compose exec app php artisan route:list
 
 ## 📄 License
 
-This project was created as a technical test assignment.
+MIT License - Copyright © 2025 Bohdan Lebedovskyi
 
-Copyright © 2025 Bohdan Lebedovskyi. All rights reserved.
-
-The code is provided for evaluation purposes. Commercial use or redistribution without permission is not permitted.
+This project is open-sourced software licensed under the [MIT license](LICENSE).
 
 ---
 
